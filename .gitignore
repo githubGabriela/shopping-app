@@ -1,0 +1,18 @@
+# Dependency directory
+/node_modules
+npm-debug.log
+
+# type script artifacts
+/typings
+
+# WebStorm
+.idea
+
+# ignore build and dist for now
+/build
+/dist
+
+/app/**/*.js
+/app/**/*.d.ts
+/app/**/*.js.map
+/logs

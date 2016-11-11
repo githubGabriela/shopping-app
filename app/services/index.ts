@@ -1,0 +1,1 @@
+export * from '../services/handle-data.service';

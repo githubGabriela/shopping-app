@@ -1,0 +1,26 @@
+<h2>{{listCategory}}</h2>
+<md-list>
+    <div *ngIf="listCategory === 'My List' || listCategory === 'All products'">
+        <div *ngFor="let category of listKeys()">
+            <div *ngIf="list[category].length > 0">
+                {{category}}
+            </div>
+            <div *ngFor="let item of list[category]">
+                <shopping-list-item [item]="item"
+                                    (add)="addItemComplexList($event, category)"
+                                    (remove)="removeItem($event)"
+                                    [removeIcon]="myListContainsItem(item)">
+                </shopping-list-item>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="listCategory !== 'My List' && listCategory !== 'All products'">
+        <shopping-list-item *ngFor="let item of listItems" [item]="item"
+                            (add)="addItem($event)"
+                            (remove)="removeItem($event)"
+                            [removeIcon]="myListContainsItem(item)"
+        >
+        </shopping-list-item>
+    </div>
+</md-list>

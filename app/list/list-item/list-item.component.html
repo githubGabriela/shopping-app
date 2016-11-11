@@ -1,0 +1,7 @@
+<md-list-item>{{item}}
+    <md-icon *ngIf="!removeIcon" class="item-icon" fontSet="fa" fontIcon="fa-check"
+             (click)="addItem()"></md-icon>
+
+    <md-icon *ngIf="removeIcon" class="item-icon" fontSet="fa" fontIcon="fa-remove"
+             (click)="removeItem()"></md-icon>
+</md-list-item>
