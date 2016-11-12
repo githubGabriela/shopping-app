@@ -1,10 +1,17 @@
-<shopping-menu (categoryChanged)="categoryHasChanged($event)"
-               (clearSearchInput)="clearSearch($event)">
+<shopping-menu (categoryChanged)="categoryUpdate($event)"
+               (clearSearchInput)="clearInput($event)"
+               [myList]="myList"
+>
 </shopping-menu>
 
-<shopping-header (searchChanged)="searchValueChanged($event)"
-                 [search]="searchText">
-</shopping-header>
+
+<md-input class="search-input" placeholder="Search" align="start"
+          [(ngModel)]="searchText" (ngModelChange)="updateSearch(searchText)">
+    <span md-suffix> <md-icon fontSet="fa" fontIcon="fa-search"></md-icon> </span>
+</md-input>
+
+<button class="button-total" (click)="redirectMyList()">{{getTotal()}}</button>
+
 
 <shopping-list [category]="category"
                [searchText]="searchText">

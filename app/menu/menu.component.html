@@ -3,6 +3,6 @@
 </button>
 
 <md-menu #menu="mdMenu">
-    <button md-menu-item *ngFor="let item of menuItems" (click)="categorySelected(item)">{{item}}</button>
+    <button md-menu-item *ngFor="let item of menuItems" (click)="categorySelected(item)"
+            [class.selected]="item === selectedCategory">{{item}}</button>
 </md-menu>
-

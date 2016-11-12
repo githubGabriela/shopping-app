@@ -1,34 +1,44 @@
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {HandleDataService} from '../services/index';
 
 @Component({
     selector: 'shopping-menu',
-    templateUrl: 'app/menu/menu.component.html'
+    templateUrl: 'app/menu/menu.component.html',
+    styleUrls: ['../app/menu/menu.component.scss']
 })
-export class MenuComponent implements OnInit {
-    @Output() categoryChanged:EventEmitter<any> = new EventEmitter();
-    @Output() clearSearchInput:EventEmitter<any> = new EventEmitter();
+export class MenuComponent {
+    @Output() categoryChanged: EventEmitter<any> = new EventEmitter();
+    @Output() clearSearchInput: EventEmitter<any> = new EventEmitter();
+
+    @Input('myList')
+    set setCategory(value: string) {
+        if (value) {
+            this.updateSelectedCategory('My List');
+            this.clearSearch();
+        }
+    }
 
     menuItems = [];
+    selectedCategory = 'My List'; //initial value
 
-    constructor(private handleDataService:HandleDataService) {
+    constructor(private handleDataService: HandleDataService) {
         this.menuItems = this.handleDataService.getCategories();
 
     }
 
-    ngOnInit() {
-        this.emitInitCategory(this.menuItems[0]);
-    }
-
-    categorySelected(category:string):void {
+    categorySelected(category: string): void {
         if (category) {
+            this.updateSelectedCategory(category);
             this.categoryChanged.emit(category);
-            this.clearSearchInput.emit(category);
+            this.clearSearch();
         }
     }
 
-    private emitInitCategory(category) {
-        this.categoryChanged.emit("My List");
+    private updateSelectedCategory(category: string) {
+        this.selectedCategory = category;
     }
 
+    private clearSearch() {
+        this.clearSearchInput.emit(true);
+    }
 }
