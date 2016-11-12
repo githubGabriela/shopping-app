@@ -1,13 +1,13 @@
 <h2>{{listCategory}}</h2>
 <md-list>
     <div *ngIf="listCategory === 'My List' || listCategory === 'All products'">
-        <div *ngFor="let category of listKeys()">
+        <div *ngFor="let category of listKeys() ">
             <div *ngIf="list[category].length > 0">
                 {{category}}
             </div>
-            <div *ngFor="let item of list[category]">
+            <div *ngFor="let item of list[category] | search : searchText ">
                 <shopping-list-item [item]="item"
-                                    (add)="addItemComplexList($event, category)"
+                                    (add)="addItemMyList($event, category)"
                                     (remove)="removeItem($event)"
                                     [removeIcon]="myListContainsItem(item)">
                 </shopping-list-item>
@@ -16,11 +16,11 @@
     </div>
 
     <div *ngIf="listCategory !== 'My List' && listCategory !== 'All products'">
-        <shopping-list-item *ngFor="let item of listItems" [item]="item"
+
+        <shopping-list-item *ngFor="let item of listItems | search : searchText " [item]="item"
                             (add)="addItem($event)"
                             (remove)="removeItem($event)"
-                            [removeIcon]="myListContainsItem(item)"
-        >
+                            [removeIcon]="myListContainsItem(item)">
         </shopping-list-item>
     </div>
 </md-list>

@@ -1,2 +1,11 @@
-<shopping-menu (categoryChanged)="categoryHasChanged($event)"></shopping-menu>
-<shopping-list [category]="category"></shopping-list>
+<shopping-menu (categoryChanged)="categoryHasChanged($event)"
+               (clearSearchInput)="clearSearch($event)">
+</shopping-menu>
+
+<shopping-header (searchChanged)="searchValueChanged($event)"
+                 [search]="searchText">
+</shopping-header>
+
+<shopping-list [category]="category"
+               [searchText]="searchText">
+</shopping-list>

@@ -7,6 +7,8 @@ import {HandleDataService} from '../services/index';
 })
 export class MenuComponent implements OnInit {
     @Output() categoryChanged:EventEmitter<any> = new EventEmitter();
+    @Output() clearSearchInput:EventEmitter<any> = new EventEmitter();
+
     menuItems = [];
 
     constructor(private handleDataService:HandleDataService) {
@@ -21,6 +23,7 @@ export class MenuComponent implements OnInit {
     categorySelected(category:string):void {
         if (category) {
             this.categoryChanged.emit(category);
+            this.clearSearchInput.emit(category);
         }
     }
 

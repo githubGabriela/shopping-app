@@ -5,16 +5,24 @@ import {Component} from '@angular/core';
     templateUrl: 'app/app.component.html'
 })
 export class AppComponent {
-    category:string;
+    category: string;
+    searchText: string;
 
     constructor() {
 
     }
 
-    categoryHasChanged(category: any):void {
-        console.log('category');
+    categoryHasChanged(category: any): void {
         if (category) {
             this.category = category;
         }
+    }
+
+    searchValueChanged(search: string) {
+        this.searchText = search;
+    }
+
+    clearSearch() {
+        this.searchText = '';
     }
 }

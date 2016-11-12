@@ -6,6 +6,7 @@ import {HandleDataService} from "../services/handle-data.service";
     templateUrl: 'app/list/list.component.html'
 })
 export class ListComponent {
+    @Input() searchText : string;
     @Input('category')
     set setItems(category: string) {
         this.setItemsByCategory(category);
@@ -46,7 +47,7 @@ export class ListComponent {
         }
     }
 
-    addItemComplexList(item: string, category: string){
+    addItemMyList(item: string, category: string){
         if (item) {
             this.handleDataService.addItem('All products', category, item);
         }

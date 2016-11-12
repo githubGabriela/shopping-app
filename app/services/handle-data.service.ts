@@ -16,7 +16,9 @@ export class HandleDataService {
         "All products": {
             "Legumes": [
                 "Poireaux",
-                "Oignons"
+                "Poivre",
+                "Oignons",
+                "Salade"
             ],
             "Fruits": [
                 "Oranges",
@@ -25,6 +27,7 @@ export class HandleDataService {
             ]
         }
     };
+    private totalMyList = 0;
 
     private names = {
         myList: 'My List',
@@ -32,7 +35,7 @@ export class HandleDataService {
     };
 
     constructor() {
-
+        this.setInitialTotalItems();
     }
 
     private loadJSON(callback) {
@@ -87,6 +90,7 @@ export class HandleDataService {
             this.addToMyList(category, item);
         } else if (this.itemExists(this.list[listType][category], item) == -1) {
             this.list[listType][category].push(item);
+            this.incrementTotalItems();
         }
     }
 
@@ -98,8 +102,30 @@ export class HandleDataService {
             let index = this.itemExists(this.list[listType][category], item);
             if (index != -1) {
                 this.list[listType][category].splice(index, 1);
+                this.decrementTotalItems();
             }
         }
+    }
+
+    getTotalItems(): number {
+        return this.totalMyList;
+    }
+
+    private setInitialTotalItems() {
+        let list = this.list[this.names.myList];
+        let categories = Object.keys(list);
+
+        for (let i = 0; i < categories.length; i++) {
+            this.totalMyList += list[categories[i]].length;
+        }
+    }
+
+    private incrementTotalItems() {
+        this.totalMyList = ++this.totalMyList;
+    }
+
+    private decrementTotalItems() {
+        this.totalMyList = --this.totalMyList;
     }
 
     private addToMyList(category: string, item: string) {
@@ -112,6 +138,7 @@ export class HandleDataService {
                 let items = list[categories[i]];
                 if (this.itemExists(items, item) === -1) {
                     list[category].push(item);
+                    this.incrementTotalItems();
                 }
             }
         }
@@ -127,6 +154,7 @@ export class HandleDataService {
             for (let j = 0; j < items.length; j++) {
                 if (items[j] === item) {
                     list[categories[i]].splice(j, 1);
+                    this.decrementTotalItems();
                 }
             }
         }
