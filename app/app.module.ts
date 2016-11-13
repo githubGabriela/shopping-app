@@ -8,6 +8,8 @@ import {ListComponent} from "./list/list.component";
 import {HandleDataService} from "./services/handle-data.service";
 import {ListItemComponent} from "./list/list-item/list-item.component";
 import {SearchPipe} from "./pipes/search.pipe";
+import {ShoppingDialog} from "./list/crud-item/dialog/dialog.component";
+import {CrudItemComponent} from "./list/crud-item/crud-item.component";
 
 
 @NgModule({
@@ -20,8 +22,13 @@ import {SearchPipe} from "./pipes/search.pipe";
         AppComponent,
         ListComponent,
         ListItemComponent,
+        CrudItemComponent,
         MenuComponent,
-        SearchPipe
+        SearchPipe,
+        ShoppingDialog
+    ],
+    entryComponents: [
+        ShoppingDialog
     ],
 
     providers: [

@@ -22,7 +22,7 @@ export class MenuComponent {
     selectedCategory = 'My List'; //initial value
 
     constructor(private handleDataService: HandleDataService) {
-        this.menuItems = this.handleDataService.getCategories();
+        this.menuItems = this.handleDataService.getMenuItems();
 
     }
 

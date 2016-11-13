@@ -1,7 +1,34 @@
-<md-list-item>{{item}}
-    <md-icon *ngIf="!removeIcon" class="item-icon" fontSet="fa" fontIcon="fa-check"
-             (click)="addItem()"></md-icon>
+<script src="../../services/index.ts"></script>
+<md-list-item>
 
-    <md-icon *ngIf="removeIcon" class="item-icon" fontSet="fa" fontIcon="fa-remove"
-             (click)="removeItem()"></md-icon>
+    <div *ngIf="!modifyItems">
+        {{item}}
+        <md-icon *ngIf="!removeIcon" class="item-icon" fontSet="fa" fontIcon="fa-check"
+                 (click)="addItem()"></md-icon>
+
+        <md-icon *ngIf="removeIcon" class="item-icon" fontSet="fa" fontIcon="fa-remove"
+                 (click)="removeItem()"></md-icon>
+    </div>
+
+
+    <div *ngIf="modifyItems">
+        <span *ngIf="!edit">
+            {{item}}
+        <md-icon class="item-icon" fontSet="fa" fontIcon="fa-pencil"
+                 (click)="toggleEdit()"></md-icon>
+        <md-icon class="item-icon" fontSet="fa" fontIcon="fa-trash"
+                 (click)="deleteItem()"></md-icon>
+
+        </span>
+
+        <span *ngIf="edit">
+            <md-input align="start" placeholder="{{item}}" [(ngModel)]="newItem">
+            </md-input>
+            <md-icon class="item-icon" fontSet="fa" fontIcon="fa-check"
+                     (click)="editItem()"></md-icon>
+            <md-icon class="item-icon" fontSet="fa" fontIcon="fa-remove"
+                     (click)="cancelEdit()"></md-icon>
+        </span>
+    </div>
+
 </md-list-item>

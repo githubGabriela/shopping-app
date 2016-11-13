@@ -1,0 +1,10 @@
+<label>Catégorie</label>
+<select [(ngModel)]="category">
+    <option value="{{category}}" *ngFor="let category of categories">{{category}}</option>
+</select>
+
+<md-input align="start" placeholder="Nom" [(ngModel)]="name">
+</md-input>
+
+<button type="button" (click)="create()">Create</button>
+<button type="button" (click)="cancel()">Cancel</button>

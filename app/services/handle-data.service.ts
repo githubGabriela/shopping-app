@@ -52,11 +52,15 @@ export class HandleDataService {
     }
 
 
+    getMenuItems(): Array<string> {
+        let items = [this.names.myList];
+        items.push(...Object.keys(this.list[this.names.allProducts]));
+        items.push(this.names.allProducts);
+        return items;
+    }
+
     getCategories(): Array<string> {
-        let categories = [this.names.myList];
-        categories.push(...Object.keys(this.list[this.names.allProducts]));
-        categories.push(this.names.allProducts);
-        return categories;
+        return Object.keys(this.list[this.names.allProducts]);
     }
 
     getItems(key: string) {
@@ -64,8 +68,8 @@ export class HandleDataService {
     }
 
     getItemsForCategory(category: string): Array<string> {
-        let listCategory = this.list[this.names.allProducts][category];
-        return listCategory ? listCategory : [];
+        let list = this.list[this.names.allProducts][category];
+        return list ? list : [];
     }
 
 
@@ -94,6 +98,15 @@ export class HandleDataService {
         }
     }
 
+    clearMyList(): void {
+        let listType = this.names.myList;
+        let list = this.list[this.names.myList];
+        let categories = Object.keys(list);
+        for (let i = 0; i < categories.length; i++) {
+            list[categories[i]] = [];
+        }
+    }
+
     removeItem(listType: string, category: string, item: string) {
         if (listType === this.names.myList || listType === this.names.allProducts) {
             this.removeFromMyList(item);
@@ -105,6 +118,49 @@ export class HandleDataService {
                 this.decrementTotalItems();
             }
         }
+    }
+
+    addItemToAllProducts(category: string, name: string) {
+        let items = this.list[this.names.allProducts][category];
+        if (this.itemExists(items, name) === -1) {
+            items.push(name);
+        }
+    }
+
+    editItemAllProducts(category: string, payload: any) {
+        //edit from all Products
+        let items = this.list[this.names.allProducts][category];
+        let index = this.itemExists(items, payload.item);
+
+        if (index !== -1) {
+            items[index] = payload.newItem;
+        }
+
+        //edit from My List
+        let items = this.list[this.names.myList][category];
+        let index = this.itemExists(items, payload.item);
+
+        if (index !== -1) {
+            items[index] = payload.newItem;
+        }
+    }
+
+    deleteItemAllProducts(category: string, name: string) {
+        //delete from all Products
+        let items = this.list[this.names.allProducts][category];
+        let index = this.itemExists(items, name);
+
+        if (index !== -1) {
+            items.splice(index, 1);
+        }
+
+        //delete from myList
+        items = this.list[this.names.myList][category];
+        index = this.itemExists(items, name);
+        if (index !== -1) {
+            items.splice(index, 1);
+        }
+
     }
 
     getTotalItems(): number {

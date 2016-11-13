@@ -1,26 +1,69 @@
-<h2>{{listCategory}}</h2>
-<md-list>
-    <div *ngIf="listCategory === 'My List' || listCategory === 'All products'">
+<h2>{{selectedCategory}}</h2>
+<md-list [ngSwitch]="selectedCategory">
+
+    <div *ngSwitchCase="'My List'">
+        <button (click)="clearMyList()">Clear list</button>
         <div *ngFor="let category of listKeys() ">
             <div *ngIf="list[category].length > 0">
                 {{category}}
             </div>
             <div *ngFor="let item of list[category] | search : searchText ">
                 <shopping-list-item [item]="item"
+                                    [modifyItems]="false"
                                     (add)="addItemMyList($event, category)"
                                     (remove)="removeItem($event)"
-                                    [removeIcon]="myListContainsItem(item)">
+                                    [removeIcon]="myListContainsItem(item)"
+                                    (editItemForAllProducts)="editItemAllProducts($event, category)"
+                                    (deleteItemFromAllProducts)="deleteItemAllProducts($event, category)">
                 </shopping-list-item>
             </div>
         </div>
     </div>
 
-    <div *ngIf="listCategory !== 'My List' && listCategory !== 'All products'">
 
-        <shopping-list-item *ngFor="let item of listItems | search : searchText " [item]="item"
+    <div *ngSwitchCase="'All products'">
+        <div *ngFor="let category of listKeys() ">
+            <div *ngIf="list[category].length > 0">
+                {{category}}
+            </div>
+            <div *ngFor="let item of list[category] | search : searchText ">
+                <shopping-list-item [item]="item"
+                                    [modifyItems]="modifyItems"
+                                    (add)="addItemMyList($event, category)"
+                                    (remove)="removeItem($event)"
+                                    [removeIcon]="myListContainsItem(item)"
+                                    (editItemForAllProducts)="editItemAllProducts($event, category)"
+                                    (deleteItemFromAllProducts)="deleteItemAllProducts($event, category)">
+                </shopping-list-item>
+            </div>
+        </div>
+
+        <button *ngIf="!modifyItems" (click)="toggleModifyItems()">
+            <md-icon fontSet="fa" fontIcon="fa-pencil">
+            </md-icon>
+        </button>
+
+        <div *ngIf="modifyItems">
+            <button (click)="toggleModifyItems()">
+                <md-icon fontSet="fa" fontIcon="fa-undo">
+                </md-icon>
+            </button>
+
+            <shopping-crud-item
+                    (newItemCreated)="addItemToAllProducts($event)">
+            </shopping-crud-item>
+        </div>
+    </div>
+
+
+    <div *ngSwitchDefault>
+        <shopping-list-item *ngFor="let item of items | search : searchText"
+                            [item]="item"
+                            [modifyItems]="false"
                             (add)="addItem($event)"
                             (remove)="removeItem($event)"
                             [removeIcon]="myListContainsItem(item)">
         </shopping-list-item>
     </div>
 </md-list>
+

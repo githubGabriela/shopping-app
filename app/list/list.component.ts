@@ -6,15 +6,17 @@ import {HandleDataService} from "../services/handle-data.service";
     templateUrl: 'app/list/list.component.html'
 })
 export class ListComponent {
-    @Input() searchText : string;
+    @Input() searchText: string;
+
     @Input('category')
     set setItems(category: string) {
         this.setItemsByCategory(category);
     };
 
     list = {};
-    listItems = [];
-    listCategory: string;
+    items = [];
+    selectedCategory: string;
+    modifyItems = false;
 
     constructor(private handleDataService: HandleDataService) {
 
@@ -22,8 +24,9 @@ export class ListComponent {
 
     setItemsByCategory(category) {
         if (category) {
-            this.listCategory = category;
-            switch (this.listCategory) {
+            this.modifyItems = false;
+            this.selectedCategory = category;
+            switch (this.selectedCategory) {
                 case('My List'):
                     this.list = this.handleDataService.getItems('My List');
                     break;
@@ -31,7 +34,7 @@ export class ListComponent {
                     this.list = this.handleDataService.getItems('All products');
                     break;
                 default:
-                    this.listItems = this.handleDataService.getItemsForCategory(category);
+                    this.items = this.handleDataService.getItemsForCategory(category);
                     break;
             }
         }
@@ -43,24 +46,50 @@ export class ListComponent {
 
     addItem(item: string) {
         if (item) {
-            this.handleDataService.addItem('My List', this.listCategory, item);
+            this.handleDataService.addItem('My List', this.selectedCategory, item);
         }
     }
 
-    addItemMyList(item: string, category: string){
+    addItemMyList(item: string, category: string) {
         if (item) {
             this.handleDataService.addItem('All products', category, item);
         }
     }
 
+    clearMyList(): void {
+        this.handleDataService.clearMyList();
+    }
+
     removeItem(item: any) {
         if (item) {
-            this.handleDataService.removeItem('My List', this.listCategory, item);
+            this.handleDataService.removeItem('My List', this.selectedCategory, item);
+        }
+    }
+
+    editItemAllProducts(payload : string, category: string): void{
+        if (payload && category) {
+            this.handleDataService.editItemAllProducts(category, payload);
+        }
+    }
+
+    deleteItemAllProducts(item : string, category: string): void{
+        if (item && category) {
+            this.handleDataService.deleteItemAllProducts(category , item);
         }
     }
 
     myListContainsItem(item: string) {
         return this.handleDataService.myListContainsItem(item);
+    }
+
+    toggleModifyItems(): void {
+        this.modifyItems = !this.modifyItems;
+    }
+
+    addItemToAllProducts(newItem: any) {
+        if (newItem.category && newItem.name) {
+            this.handleDataService.addItemToAllProducts(newItem.category, newItem.name);
+        }
     }
 
 }
