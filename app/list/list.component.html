@@ -3,7 +3,7 @@
 
     <div *ngSwitchCase="'My List'">
         <button (click)="emptyMyList()">Empty list</button>
-        <button (click)="copyListToClipboard()">Copy</button>
+        <button [copyToClipboard]="list">Copy</button>
 
         <div *ngFor="let category of listKeys() ">
             <div *ngIf="list[category].length > 0">
@@ -68,4 +68,5 @@
         </shopping-list-item>
     </div>
 </md-list>
+
 

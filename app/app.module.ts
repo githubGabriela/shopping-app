@@ -10,6 +10,7 @@ import {ListItemComponent} from "./list/list-item/list-item.component";
 import {SearchPipe} from "./pipes/search.pipe";
 import {ShoppingDialog} from "./list/crud-item/dialog/dialog.component";
 import {CrudItemComponent} from "./list/crud-item/crud-item.component";
+import {CopyToClipboardDirective} from "./directives/copy-to-clipboard.directive";
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {CrudItemComponent} from "./list/crud-item/crud-item.component";
         CrudItemComponent,
         MenuComponent,
         SearchPipe,
-        ShoppingDialog
+        ShoppingDialog,
+        CopyToClipboardDirective
     ],
     entryComponents: [
         ShoppingDialog

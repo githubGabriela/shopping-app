@@ -3,10 +3,11 @@ import {HandleDataService} from "./services/handle-data.service";
 
 @Component({
     selector: 'my-app',
-    templateUrl: 'app/app.component.html'
+    templateUrl: 'app/app.component.html',
+    styleUrls: ['../app/app.component.scss']
 })
 export class AppComponent {
-    category = 'My List'; //initial value
+    category = 'My List';
     searchText: string;
     myList = false;
 
