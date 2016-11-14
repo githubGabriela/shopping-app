@@ -98,13 +98,14 @@ export class HandleDataService {
         }
     }
 
-    clearMyList(): void {
+    emptyMyList(): void {
         let listType = this.names.myList;
         let list = this.list[this.names.myList];
         let categories = Object.keys(list);
         for (let i = 0; i < categories.length; i++) {
             list[categories[i]] = [];
         }
+        this.totalMyList = 0;
     }
 
     removeItem(listType: string, category: string, item: string) {
@@ -137,8 +138,8 @@ export class HandleDataService {
         }
 
         //edit from My List
-        let items = this.list[this.names.myList][category];
-        let index = this.itemExists(items, payload.item);
+        items = this.list[this.names.myList][category];
+        index = this.itemExists(items, payload.item);
 
         if (index !== -1) {
             items[index] = payload.newItem;

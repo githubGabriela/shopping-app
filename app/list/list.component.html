@@ -2,7 +2,9 @@
 <md-list [ngSwitch]="selectedCategory">
 
     <div *ngSwitchCase="'My List'">
-        <button (click)="clearMyList()">Clear list</button>
+        <button (click)="emptyMyList()">Empty list</button>
+        <button (click)="copyListToClipboard()">Copy</button>
+
         <div *ngFor="let category of listKeys() ">
             <div *ngIf="list[category].length > 0">
                 {{category}}
